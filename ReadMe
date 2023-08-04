@@ -1,0 +1,33 @@
+
+WHDLoad - Graphical Coders Interface
+
+a user interface to view whdloads coredump files
+
+to run you need:
+
+	MUI 3.8			http://www.sasg.com/
+	MCC_BetterString	http://www.amiga.dk/tumult/
+	MCC_HexEdit		http://www.amiga.dk/tumult/
+
+its compiled using gcc 2.95, sasc may work too
+	
+it is still incomplete and there are many things I want to have added.
+any work on it from you would be very welcome!
+
+it's recommended to set a nonproportional font in the BetterString config.
+
+04.06.2000 Wepl
+- initial release
+
+13.06.2004 Wepl
+- various enhancements
+
+25.02.2008 Wepl
+- Slave, BaseMem and ExpMem can be extracted to a file
+- Info window also shows Slave structure
+
+30.12.2018 Wepl
+- added a button 'New from Cursor' to the memory windows to open a new
+  memory window from the content under the actual cursor
+- fixed a bug in Partial Extract code which could crash the program
+
