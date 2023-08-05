@@ -2,7 +2,6 @@
 ;  :Module.	dumpfile.c
 ;  :Author.	Bert Jahn
 ;  :EMail.	wepl@whdload.de
-;  :Version.	$Id: dumpfile.c 0.10 2008/09/07 17:36:09 wepl Exp wepl $
 ;  :History.	18.07.98 started
 ;		13.12.98 dumpfilename from whdload.prefs
 ;		02.03.00 expmem stuff added
@@ -12,6 +11,7 @@
 ;		04.09.08 dumpfile name handling fixed when no s:whdload.prefs present
 ;			 filerequester if dumpfile loading fails
 ;			 partial saving BaseMem/ExpMem added
+;		17.07.23 reading cols and options added
 ;  :Copyright.	All Rights Reserved
 ;  :Language.	C
 ;  :Translator.	GCC
@@ -70,6 +70,7 @@ void freedump(void) {
 	}
 	header = NULL;
 	term = NULL;
+	opt = NULL;
 	cpu = NULL;
 	custom = NULL;
 	ciaa = NULL;
@@ -77,6 +78,7 @@ void freedump(void) {
 	slave = NULL;
 	mem = NULL;
 	emem = NULL;
+	cols = NULL;
 }
 
 BOOL loaddump(STRPTR name) {
@@ -145,12 +147,16 @@ BOOL loaddump(STRPTR name) {
 					do {
 						chk_id = *tmp++;
 						chk_len = *tmp++;
+						// printf("off=$%5lx id=%.4s len=%ld\n",4*(((APTR*)tmp)-dumpfile),&chk_id,chk_len);
 						switch (chk_id) {
 						case ID_HEAD:
 							header = (struct whddump_header*)tmp;
 							break;
 						case ID_TERM:
 							term = (char*)tmp;
+							break;
+						case ID_OPT:
+							opt = (char*)tmp;
 							break;
 						case ID_CPU:
 							cpu = (struct whddump_cpu*)tmp;
@@ -172,6 +178,9 @@ BOOL loaddump(STRPTR name) {
 							break;
 						case ID_EMEM:
 							emem = (APTR)tmp;
+							break;
+						case ID_COLS:
+							cols = (APTR)tmp;
 							break;
 						}
 						size -= 8 + chk_len;

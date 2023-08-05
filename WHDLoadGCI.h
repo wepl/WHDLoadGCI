@@ -1,10 +1,10 @@
 /*************************************************************************
 ;  :Module.	WHDLoadGCI.h
 ;  :Author.	Bert Jahn
-;  :Version.	$Id: WHDLoadGCI.h 0.13 2018/12/31 01:13:03 wepl Exp wepl $
 ;  :History.	18.07.98 started
 ;		12.07.03 changes for reg to mem
 ;		24.02.08 strncpyz added
+;		17.07.23 opt, cols added
 ;  :Copyright.	All Rights Reserved
 ;  :Language.	C
 ;  :Translator.	GCC
@@ -20,7 +20,7 @@
 
 enum {
 	MEN_PROJECT=1,MEN_EXSLAVE,MEN_EXBASEMEM,MEN_EXBASEPART,MEN_EXEXPMEM,MEN_EXEXPPART,MEN_ABOUT,MEN_ABOUTMUI,MEN_QUIT,
-	MAIN_MORECIA,MAIN_MORECPU,MAIN_MORECUST,MAIN_MOREMEM,MAIN_MOREEMEM,MAIN_MORESLAVE,MAIN_MOREINFO,
+	MAIN_MORECIA,MAIN_MORECPU,MAIN_MORECUST,MAIN_MOREMEM,MAIN_MOREEMEM,MAIN_MORESLAVE,MAIN_MOREINFO,MAIN_MOREOPT,
 	MAIN_MORED0,MAIN_MORED1,MAIN_MORED2,MAIN_MORED3,MAIN_MORED4,MAIN_MORED5,MAIN_MORED6,MAIN_MORED7,
 	MAIN_MOREA0,MAIN_MOREA1,MAIN_MOREA2,MAIN_MOREA3,MAIN_MOREA4,MAIN_MOREA5,MAIN_MOREA6,MAIN_MOREUSP,MAIN_MORESSP,MAIN_MOREPC,
 	MAIN_MORECOP1LC,MAIN_MORECOP2LC,
@@ -40,9 +40,11 @@ extern struct whddump_cpu * cpu;
 extern struct whddump_custom * custom;
 extern struct whddump_header * header;
 extern char * term;
+extern char * opt;
 extern struct whddump_slave * slave;
 extern APTR * mem;
 extern APTR * emem;
+extern APTR * cols;
 
 /************************************************************************/
 /*	macros								*/

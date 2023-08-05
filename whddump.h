@@ -2,11 +2,11 @@
 ;  :Module.	whddump.h
 ;  :Author.	Bert Jahn
 ;  :EMail.	wepl@whdload.de
-;  :Version.	$Id: whddump.h 0.6 2008/02/25 21:08:23 wepl Exp wepl $
 ;  :History.	18.07.98 started
 ;		28.03.00 TERM chunk added
 ;		06.06.04 wdh_ShadowMem changed from APTR to ULONG
 ;		24.02.08 slave structure added
+;		17.07.23 ID_COLS, ID_OPT added
 ;  :Copyright.	All Rights Reserved
 ;  :Language.	C
 ;  :Tabsize.	4
@@ -55,6 +55,8 @@ struct whddump_header
 };
 
 #define ID_TERM	MAKE_ID('T','E','R','M')	/* starting whdload v11 */
+
+#define ID_OPT	MAKE_ID('O','P','T',' ')	/* starting whdload v18.10 */
 
 #define ID_CPU	MAKE_ID('C','P','U',' ')
 
@@ -163,4 +165,6 @@ struct whddump_slave
 #define ID_MEM	MAKE_ID('M','E','M',' ')
 
 #define ID_EMEM	MAKE_ID('E','M','E','M')
+
+#define ID_COLS	MAKE_ID('C','O','L','S')
 

@@ -1,7 +1,6 @@
 /*************************************************************************
 ;  :Module.	class.c
 ;  :Author.	Bert Jahn
-;  :Version.	$Id: class.c 1.7 2020/04/27 22:53:08 wepl Exp wepl $
 ;  :History.	07.06.04 separated from winmem.c
 ;		18.04.06 goto_abs added
 ;		07.09.08 GCIStringPart added
@@ -407,7 +406,7 @@ GCIStringPart_mChanged(
 	
 	get(obj, MUIA_String_Contents, &s );
 	v = htoi( s );
-	printf("changed obj=%p s=%s v=%ld\n",obj,s,v);
+	// printf("changed obj=%p s=%s v=%ld\n",obj,s,v);
 
 	switch (data->type) {
 		case GCIStringPartType_Offset:

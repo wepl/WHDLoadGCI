@@ -2,7 +2,6 @@
 ;  :Module.	WHDLoadGCI.c
 ;  :Author.	Bert Jahn
 ;  :EMail.	wepl@whdload.de
-;  :Version.	$Id: WHDLoadGCI.c 0.19 2018/12/31 01:13:03 wepl Exp wepl $
 ;  :History.	18.07.98 started
 ;		13.12.98 immediate terminate if dump loading fails
 ;		02.03.00 expmem stuff added
@@ -13,6 +12,7 @@
 ;		04.09.08 partial saving BaseMem/ExpMem added
 ;		03.01.12 bubble help for intena improved
 ;		30.12.18 new memory window from cursor added
+;		17.07.23 reading options, cols added
 ;  :Copyright.	All Rights Reserved
 ;  :Language.	C
 ;  :Translator.	GCC 2.90.27
@@ -44,6 +44,7 @@
 /************************************************************************/
 
 void	make_win_info	(void);
+void	make_win_opt	(void);
 void	make_win_cia	(void);
 void	make_win_cpu	(void);
 void	make_win_cust	(void);
@@ -72,6 +73,7 @@ APTR win_part = NULL;		/* window partial save */
 
 struct whddump_header	* header = NULL;
 char			* term = NULL;
+char			* opt = NULL;
 struct whddump_cpu	* cpu = NULL;
 struct whddump_custom	* custom = NULL;
 struct whddump_cia	* ciaa = NULL;
@@ -79,6 +81,7 @@ struct whddump_cia	* ciab = NULL;
 struct whddump_slave	* slave = NULL;
 APTR			* mem = NULL;
 APTR			* emem = NULL;
+APTR			* cols = NULL;
 
 ULONG winmem_cursornew;		/* address for new memory window via cursor */
 
@@ -299,7 +302,7 @@ void main2() {
 		mored0,mored1,mored2,mored3,mored4,mored5,mored6,mored7,
 		morea0,morea1,morea2,morea3,morea4,morea5,morea6,
 		moreusp,moressp,morepc,morecpu,
-		morecust,morecia,moremem,moreemem,moreslave,moreinfo,
+		morecust,morecia,moremem,moreemem,moreslave,moreinfo,moreopt,
 		a_quit/*,a_restart,a_cont*/;
 	ULONG signals;
 	BOOL running = TRUE;
@@ -355,6 +358,7 @@ void main2() {
 							ChildIf(emem), moreemem = SimpleButtonIf(emem,"ExpMem"),
 							Child, moreslave = SimpleButton("Slave"),
 							Child, moreinfo = SimpleButton("Info"),
+							Child, moreopt = SimpleButton("Options"),
 							End,
 						End,
 					End,
@@ -400,6 +404,7 @@ void main2() {
 	DoMethod(moreemem,MUIM_Notify,MUIA_Pressed,FALSE,app,2,MUIM_Application_ReturnID,MAIN_MOREEMEM);
 	DoMethod(moreslave,MUIM_Notify,MUIA_Pressed,FALSE,app,2,MUIM_Application_ReturnID,MAIN_MORESLAVE);
 	DoMethod(moreinfo,MUIM_Notify,MUIA_Pressed,FALSE,app,2,MUIM_Application_ReturnID,MAIN_MOREINFO);
+	DoMethod(moreopt,MUIM_Notify,MUIA_Pressed,FALSE,app,2,MUIM_Application_ReturnID,MAIN_MOREOPT);
 
 	DoMethod(a_quit,MUIM_Notify,MUIA_Pressed,FALSE,app,2,MUIM_Application_ReturnID,MUIV_Application_ReturnID_Quit);
 
@@ -474,6 +479,9 @@ void main2() {
 				break;
 			case MAIN_MOREINFO:
 				make_win_info();
+				break;
+			case MAIN_MOREOPT:
+				make_win_opt();
 				break;
 			case MAIN_MORED0:
 			case MAIN_MORED1:

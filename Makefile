@@ -1,5 +1,5 @@
 
-SRCS = class.c dumpfile.c misc.c WHDLoadGCI.c wincia.c wincpu.c wincust.c wininfo.c winmem.c
+SRCS = class.c dumpfile.c misc.c WHDLoadGCI.c wincia.c wincpu.c wincust.c wininfo.c winopt.c winmem.c
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
@@ -32,6 +32,8 @@ wincpu.o: wincpu.c class.h whddump.h WHDLoadGCI.h
 wincust.o: wincust.c class.h whddump.h WHDLoadGCI.h
 
 wininfo.o: wininfo.c WHDLoadGCI.h whddump.h
+
+winopt.o: winopt.c WHDLoadGCI.h
 
 winmem.o: winmem.c whddump.h WHDLoadGCI.h class.h
 
